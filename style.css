@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+
+.selectedLabelBar {
+  width: 200px;
+  height: 30px;
+  border: 1px solid grey;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.selectionPanel {
+  width: 250px;
+  border: 1px solid grey;
+  list-style: none;
+  overflow: hidden;
+}
+
+.optionLabel {
+  width: 250px;
+}
+
+.optionLabel:hover {
+  background: blue;
+  width: 250px;
+}
+
+.selectedLabel {
+  background: grey;
+  border-radius: 5px;
+  padding: 0 2px;
+}
+
+.selectionPanelContainer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 600ms;
+}
+.selectionPanelContainer.open {
+  grid-template-rows: 1fr;
+}
+
+.selectedLabelBarContainer {
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 235px;
+}
+
+.openOptionButton {
+  width: 35px;
+}
