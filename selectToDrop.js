@@ -91,7 +91,7 @@ class MultiDropSelect {
     this.innerPart.selectedLabelBar.innerHTML = this.html.selectedLabels;
   }
   getValue() {
-    return this.targetSelected;
+    return [...this.targetSelected];
   }
 }
 
