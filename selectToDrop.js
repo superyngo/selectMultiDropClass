@@ -90,10 +90,12 @@ class MultiDropSelect {
 }
 
 const allSelects = [...document.querySelectorAll("select")];
-export const newSelectors = [];
+const newSelectors = [];
 allSelects.forEach((selector) => {
   newSelectors.push(new MultiDropSelect(selector));
 });
 newSelectors.forEach((newSelector) => {
   newSelector.preRender();
 });
+
+export {newSelectors};
