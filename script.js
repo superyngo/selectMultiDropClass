@@ -4,6 +4,6 @@ import {newSelectors} from "./selectToDrop.js";
 const getValueButton = document.querySelector(".getValueButton");
 getValueButton.addEventListener("click", () => {
   newSelectors.forEach((newSelector) => {
-    console.log(newSelector.getValue());
+    console.log(newSelector.Value);
   });
 });

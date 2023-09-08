@@ -1,6 +1,6 @@
 class MultiDropSelect {
   target = {};
-  targetSelected = new Set();
+  selectedLabels = new Set();
   innerPart = {
     selectedLabelBar: null,
     selectionPanel: null,
@@ -8,18 +8,8 @@ class MultiDropSelect {
     openOptionButton: null,
   };
   html = {
-    wrapper: ``,
-    targetOptions: ``,
-    selectedLabels: ``,
-  };
-  constructor(target) {
-    if (!target || target.tagName != "SELECT")
-      throw new Error("Need Select Element");
-    this.target = target;
-  }
-  setMainHTML() {
-    this.html.targetOptions = [...this.target.children].reduce(
-      (newHTML, children) => {
+    targetOptions: (target) =>
+      [...target.children].reduce((newHTML, children) => {
         newHTML += `
         <li>
           <label class="optionLabel">
@@ -29,25 +19,35 @@ class MultiDropSelect {
         </li>
       `;
         return newHTML;
-      },
-      ``
-    );
-    this.html.wrapper = `   
-        <div class="selectedLabelBarContainer">
-          <span class="selectedLabelBar"></span>
-          <button class="openOptionButton">🔻</button>
+      }, ``),
+    wrapper: (targetOptions) => `   
+      <div class="selectedLabelBarContainer">
+        <span class="selectedLabelBar"></span>
+        <button class="openOptionButton">🔻</button>
+      </div>
+      <div class="selectionPanelContainer">
+        <div class="selectionPanel">
+          ${targetOptions}
         </div>
-        <div class="selectionPanelContainer">
-          <div class="selectionPanel">
-            ${this.html.targetOptions}
-          </div>
-        </div>
-    `;
+      </div>
+      `,
+    selectedLabels: (selectedLabels) =>
+      [...selectedLabels].reduce((string, label) => {
+        string += `<span class="selectedLabel">${label}</span>`;
+        return string;
+      }, ""),
+  };
+  constructor(target) {
+    if (!target || target.tagName != "SELECT")
+      throw new Error("Need Select Element");
+    this.target = target;
   }
   swap() {
     const multiDropWrapper = document.createElement("div");
     multiDropWrapper.className = "multiDropWrapper";
-    multiDropWrapper.innerHTML = this.html.wrapper;
+    multiDropWrapper.innerHTML = this.html.wrapper(
+      this.html.targetOptions(this.target)
+    );
     this.target.replaceWith(multiDropWrapper);
     this.target = multiDropWrapper;
   }
@@ -63,7 +63,6 @@ class MultiDropSelect {
       this.target.querySelector(".openOptionButton");
   }
   preRender() {
-    this.setMainHTML();
     this.swap();
     this.setInnerPart();
     this.innerPart.openOptionButton.addEventListener("click", () => {
@@ -72,26 +71,21 @@ class MultiDropSelect {
     this.innerPart.optionsCheckbox.forEach((checkbox) => {
       checkbox.addEventListener("click", (e) => {
         if (e.target.checked) {
-          this.targetSelected.add(e.target.value);
+          this.selectedLabels.add(e.target.value);
         } else {
-          this.targetSelected.delete(e.target.value);
+          this.selectedLabels.delete(e.target.value);
         }
         this.render();
       });
     });
   }
   render() {
-    this.html.selectedLabels = [...this.targetSelected].reduce(
-      (string, label) => {
-        string += `<span class="selectedLabel">${label}</span>`;
-        return string;
-      },
-      ""
+    this.innerPart.selectedLabelBar.innerHTML = this.html.selectedLabels(
+      this.selectedLabels
     );
-    this.innerPart.selectedLabelBar.innerHTML = this.html.selectedLabels;
   }
-  getValue() {
-    return [...this.targetSelected];
+  get Value() {
+    return [...this.selectedLabels];
   }
 }
 
