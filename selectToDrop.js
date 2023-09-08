@@ -20,7 +20,6 @@ class MultiDropSelect {
   setMainHTML() {
     this.html.targetOptions = [...this.target.children].reduce(
       (newHTML, children) => {
-        console.log(children);
         newHTML += `
         <li>
           <label class="optionLabel">
@@ -51,7 +50,6 @@ class MultiDropSelect {
     multiDropWrapper.innerHTML = this.html.wrapper;
     this.target.replaceWith(multiDropWrapper);
     this.target = multiDropWrapper;
-    console.log(this.target.tagName);
   }
   setInnerPart() {
     this.innerPart.selectedLabelBar =
@@ -73,7 +71,6 @@ class MultiDropSelect {
     });
     this.innerPart.optionsCheckbox.forEach((checkbox) => {
       checkbox.addEventListener("click", (e) => {
-        console.log(e.target);
         if (e.target.checked) {
           this.targetSelected.add(e.target.value);
         } else {
