@@ -32,9 +32,9 @@ class MultiDropSelect {
       </div>
       `,
     selectedLabels: (selectedLabels) =>
-      [...selectedLabels].reduce((string, label) => {
-        string += `<span class="selectedLabel">${label}</span>`;
-        return string;
+      [...selectedLabels].reduce((newHTML, label) => {
+        newHTML += `<span class="selectedLabel">${label}</span>`;
+        return newHTML;
       }, ""),
   };
   constructor(target) {
