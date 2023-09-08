@@ -89,10 +89,10 @@ class MultiDropSelect {
   }
 }
 
-export const newSelectors = [...document.querySelectorAll("select")].map(
-  (selector) => {
-    const newSelector = new MultiDropSelect(selector);
-    newSelector.preRender();
-    return newSelector;
+export const newSelects = [...document.querySelectorAll("select")].map(
+  (select) => {
+    const newSelect = new MultiDropSelect(select);
+    newSelect.preRender();
+    return newSelect;
   }
 );
